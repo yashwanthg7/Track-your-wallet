@@ -1,11 +1,15 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
+import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
 import App from './App';
+import { TransactionsProvider } from './Context/TransactionsContext';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+ReactDOM.render(
+  <BrowserRouter>
+    <TransactionsProvider>
+      <App>
+      </App>
+    </TransactionsProvider>
+  </BrowserRouter>,
+  document.getElementById('root')
 );

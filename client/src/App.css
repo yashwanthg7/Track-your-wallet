@@ -1,8 +1,8 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
 
 *>*{
   font-family: 'Poppins', sans-serif;
@@ -22,4 +22,10 @@
 
 .bg-yellow{
   background-color: var(--color-yellow);
+}
+
+.open-btn {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
 }
