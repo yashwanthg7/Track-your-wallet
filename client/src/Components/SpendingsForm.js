@@ -141,6 +141,7 @@ const SpendingsForm = () => {
             Select Option
           </option>
           <option value="Movies">Movies</option>
+          <option value="Shopping">Shopping</option>
           <option value="Hospital">Hospital</option>
           <option value="investments">Investments</option>
           <option value="Rent">Rent</option>

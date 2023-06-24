@@ -7,8 +7,8 @@ import { TransactionsProvider } from './Context/TransactionsContext';
 ReactDOM.render(
   <BrowserRouter>
     <TransactionsProvider>
-      <App>
-      </App>
+        <App>
+        </App>
     </TransactionsProvider>
   </BrowserRouter>,
   document.getElementById('root')

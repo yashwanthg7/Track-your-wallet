@@ -38,21 +38,21 @@ export const TransactionsProvider = ({ children }) => {
         getEarnings();
     }
 
-    const TotalEarnings = () =>{
+    const TotalEarnings = () => {
         let totalEarnings = 0;
-        earnings.forEach((earning) =>{
+        earnings.forEach((earning) => {
             totalEarnings += earning.amount;
         })
         return totalEarnings;
     }
-                      //Spendings
+    //Spendings
     const addSpending = async (spending) => {
         try {
             const response = await axios.post(`${API_URL}/add_Spendings`, spending)
         } catch (error) {
             setError(error.response.data.message);
         }
-        getEarnings();
+        getSpendings();
     }
     const getSpendings = async () => {
         try {
@@ -72,14 +72,26 @@ export const TransactionsProvider = ({ children }) => {
         getSpendings();
     }
 
-    const TotalSpendings = () =>{
+    const TotalSpendings = () => {
         let totalSpendings = 0;
-        spendings.forEach((spending) =>{
+        spendings.forEach((spending) => {
             totalSpendings += spending.amount;
         })
         return totalSpendings;
     }
 
+    const totalBalance = () => {
+        return TotalEarnings() - TotalSpendings();
+    }
+
+    const transactionsHistory = () => {
+        const history = [...earnings, ...spendings];
+        history.sort((a, b) => {
+            return new Date(b.createdAt) - new Date(a.createdAt)
+        })
+
+        return history;
+    }
     return (
         <TransactionsContext.Provider value={
             {
@@ -93,6 +105,8 @@ export const TransactionsProvider = ({ children }) => {
                 deleteSpending,
                 TotalSpendings,
                 spendings,
+                totalBalance,
+                transactionsHistory
             }
         }>
             {children}

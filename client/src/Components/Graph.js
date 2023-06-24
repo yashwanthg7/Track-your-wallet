@@ -1,91 +1,77 @@
-import React, { useRef, useEffect } from 'react';
+import React from 'react';
+import moment from 'moment';
 import { Line } from 'react-chartjs-2';
-import { Chart as ChartJS, LineElement, CategoryScale, LinearScale, PointElement, Legend } from 'chart.js';
 import styled from 'styled-components';
+import { useTransactionsContext } from '../Context/TransactionsContext';
+import {
+    Chart as ChartJS,
+    LineElement,
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    Legend,
+    Title,
+    Tooltip,
+    Filler,
+} from 'chart.js';
+// import faker from 'faker';
 
-ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Legend);
-
-const Container = styled.div`
-  display: flex;
-  justify-content: center;
-  max-width: 20rem;
-  margin: 0 auto;
-`;
-
-const Item = styled.div`
-  /* Your item styles here */
-`;
-
-const ChartWrapper = styled.div`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  margin-top: 2rem;
-`;
-
-const TotalElement = styled.div`
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #48bb78;
-  margin-top: 1rem;
-`;
+ChartJS.register(
+    LineElement,
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    Legend,
+    Title,
+    Tooltip,
+    Filler
+);
 
 const Graph = () => {
-    const chartRef = useRef(null);
+    const { earnings, spendings ,transactionsHistory} = useTransactionsContext();
 
-    useEffect(() => {
-        const chartInstance = chartRef.current.chartInstance;
-        if (chartInstance) {
-            chartInstance.destroy();
-        }
-    }, []);
+    const dateFormat = (date) => {
+        console.log(date);
+        return moment(date).format('DD/MM/YYYY');
+    };
+    const [...history] = transactionsHistory();
 
-    const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+    const labels = history.map((earning) => dateFormat(earning.date));
+
     const data = {
-        labels: labels,
+        labels,
         datasets: [
             {
-                label: 'My First Dataset',
-                data: [65, 59, 80, 81, 56, 55, 40],
                 fill: true,
-                backgroundColor: 'aqua',
-                borderColor: 'rgb(75, 192, 192)',
-                pointBorderColor: 'aqua',
-                tension: 0.1,
+                label: 'Earnings',
+                data: earnings.map((earning) => earning.amount),
+                borderColor: 'rgb(53, 162, 235)',
+                backgroundColor: 'rgba(53, 162, 235, 0.5)',
+            },
+            {
+                fill: true,
+                label: 'Spendings',
+                data: spendings.map((spending) => spending.amount),
+                borderColor: 'rgb(255, 99, 132)',
+                backgroundColor: 'rgba(255, 99, 132, 0.5)',
             },
         ],
     };
 
-    const options = {
-        plugins: {
-            legend: true,
-        },
-        scales: {
-            // y : {
-            //     // min : 3,
-            //     // max: 6, 
-            // }
-        },
-    };
-
     return (
-        <Container>
-            <Item></Item>
-
-            <ChartWrapper>
-                <Line data={data} options={options} ref={chartRef} />
-                <TotalElement>
-                    Total:   <span>₹0</span>
-                </TotalElement>
-            </ChartWrapper>
-
-            <div className='flex flex-col py-10 ga-4'>
-                {/* Labels */}
-            </div>
-        </Container>
+        <ChartStyled>
+            <Line data={data} />
+        </ChartStyled>
     );
 };
+
+const ChartStyled = styled.div`
+  background: #fcf6f9;
+  border: 2px solid #ffffff;
+  box-shadow: 0px 1px 15px rgba(0, 0, 0, 0.06);
+  padding: 1rem;
+  border-radius: 20px;
+  height: 50%;
+`;
 
 export default Graph;
