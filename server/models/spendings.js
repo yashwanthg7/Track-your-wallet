@@ -15,7 +15,7 @@ const spendingsSchemaSchema = new mongoose.Schema({
 
     type: {
         type: String,
-        default : "earnings",
+        default : "spendings",
     },
 
     date: {
