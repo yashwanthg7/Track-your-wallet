@@ -9,12 +9,10 @@ const TransactionTable = () => {
     const [itemsPerPage, setItemsPerPage] = useState(10);
 
     useEffect(() => {
-        // Fetch transaction data and update the transactions state variable
         const [...history] = transactionsHistory();
         setTransactions(history);
     }, []);
 
-    // Pagination logic
     const lastIndex = currentPage * itemsPerPage;
     const firstIndex = lastIndex - itemsPerPage;
     const currentTransactions = transactions.slice(firstIndex, lastIndex);
