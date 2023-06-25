@@ -3,12 +3,13 @@ const {add_Spendings , get_Spendings , delete_Spending} = require("../controller
 
 const router = require('express').Router();
 
-router.post('/add_Earnings', add_Earnings);
-router.get('/get_Earnings', get_Earnings);
-router.delete('/delete_Earning/:id' , delete_Earning);
+router.post('/add_Earnings/:userid', add_Earnings);
+router.get('/get_Earnings/:userid', get_Earnings);
+router.delete('/delete_Earning/:id/:userid' , delete_Earning);
 
-router.post('/add_Spendings', add_Spendings);
-router.get('/get_Spendings', get_Spendings);
-router.delete('/delete_Spending/:id' , delete_Spending);
+router.post('/add_Spendings/:userid', add_Spendings);
+router.get('/get_Spendings/:userid', get_Spendings);
+router.delete('/delete_Spending/:id/:userid' , delete_Spending);
+
 
 module.exports = router;

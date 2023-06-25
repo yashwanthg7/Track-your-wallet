@@ -1,14 +1,8 @@
 const earningsSchema = require("../models/earnings");
 
 const add_Earnings = async (req, res) => {
-    const {
-        title,
-        amount,
-        category,
-        description,
-        date,
-    } =
-        req.body;
+    const { title, amount, category, description, date } = req.body;
+    const { userid } = req.params;
 
     const parsedDate = new Date(date);
 
@@ -18,8 +12,9 @@ const add_Earnings = async (req, res) => {
         category,
         description,
         date: parsedDate,
+        user: userid,
     });
-    
+
     try {
         if (!title || !category || !description || !date) {
             return res.status(400).json({ message: "All fields are required" });
@@ -29,37 +24,37 @@ const add_Earnings = async (req, res) => {
         }
 
         await newEarnings.save();
-        res.status(200).json({ message: "New Earning added succesfully" })
+        res.status(200).json({ message: "New Earning added successfully" });
+    } catch (error) {
+        res.status(500).json({ message: "Internal server error" });
     }
-    catch (error) {
-        res.status(500).json({ message: "Internal server error" })
-    }
-}
+};
+
 
 const get_Earnings = async (req, res) => {
+    const { userid } = req.params;
+
     try {
-        const earnings = await earningsSchema.find().sort({ createdAt: -1 });
+        const earnings = await earningsSchema.find({ user: userid }).sort({ createdAt: -1 });
         res.status(200).json(earnings);
-    }
-    catch (error) {
+    } catch (error) {
         res.status(500).json({ message: "Internal server error" });
     }
-
-}
+};
 
 const delete_Earning = async (req, res) => {
-    const { id } = req.params;
-    console.log(id);
+    const { id, userid } = req.params;
 
     try {
-        const deleteeeee = await earningsSchema.findByIdAndDelete(id);
-        console.log(deleteeeee);
-        res.status(200).json({message : "Earning deleted Succesfully"});
-    }
-    catch (error) {
+        const deletedEarning = await earningsSchema.findOneAndDelete({ _id: id, user: userid });
+        if (!deletedEarning) {
+            return res.status(404).json({ message: "Earning not found" });
+        }
+        res.status(200).json({ message: "Earning deleted successfully" });
+    } catch (error) {
         res.status(500).json({ message: "Internal server error" });
     }
+};
 
-}
 
-module.exports = { add_Earnings, get_Earnings , delete_Earning };
+module.exports = { add_Earnings, get_Earnings, delete_Earning };

@@ -15,7 +15,7 @@ const spendingsSchemaSchema = new mongoose.Schema({
 
     type: {
         type: String,
-        default : "spendings",
+        default: "spendings",
     },
 
     date: {
@@ -33,8 +33,13 @@ const spendingsSchemaSchema = new mongoose.Schema({
         type: String,
         trim: true,
         required: true,
-    }
+    },
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
+    },
 },
-{timestamps : true});
+    { timestamps: true });
 
 module.exports = mongoose.model('Spendings', spendingsSchemaSchema)

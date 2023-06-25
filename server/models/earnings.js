@@ -15,7 +15,7 @@ const earningsSchema = new mongoose.Schema({
 
     type: {
         type: String,
-        default : "earnings",
+        default: "earnings",
     },
 
     date: {
@@ -33,8 +33,13 @@ const earningsSchema = new mongoose.Schema({
         type: String,
         trim: true,
         required: true,
-    }
+    },
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
+    },
 },
-{timestamps : true});
+    { timestamps: true });
 
 module.exports = mongoose.model('Earnings', earningsSchema)
