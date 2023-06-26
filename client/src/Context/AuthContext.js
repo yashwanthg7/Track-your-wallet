@@ -30,11 +30,13 @@ const AuthProvider = ({ children }) => {
       setUser(user);
       setUserId(user._id);
       setLoggedIn(true);
+      if(user.role === "admin"){
+        navigate("/")
+      }
     } catch (error) {
       setLoggedIn(false);
     }
   };
-  // const memoizedUserId = useMemo(() => userId, [userId]);
   
   const login = async (email, password) => {
     try {
