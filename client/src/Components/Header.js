@@ -59,7 +59,7 @@ const AuthButton = styled.button`
   margin-left: 16px;
 `;
 
-const Header = ({ toggleNav }) => {
+const Header = ({ toggleNav ,showNav}) => {
   const navigate = useNavigate();
   const { loggedIn, logout } = useAuth();
 
@@ -78,9 +78,11 @@ const Header = ({ toggleNav }) => {
 
   return (
     <Container>
+    {showNav && (
       <ToggleButton onClick={toggleNav}>
         <FaBars />
       </ToggleButton>
+    )}
       <Heading>Track Your Wallet</Heading>
       <AuthButtonsContainer>
         {loggedIn ? (

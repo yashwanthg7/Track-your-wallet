@@ -81,7 +81,6 @@ const logout = async (req, res) => {
 const verifyToken = async (req, res) => {
   const authHeader = req.headers.authorization;
   const token = authHeader && authHeader.split(' ')[1]
-  console.log(token)
 
   if (!token) {
     return res.status(401).json({ message: 'Unauthorized' });
@@ -91,7 +90,6 @@ const verifyToken = async (req, res) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const userId = decoded.userId;
     const user = await User.findById(userId);
-    console.log(user)
 
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
@@ -106,8 +104,6 @@ const verifyToken = async (req, res) => {
 const getUsers = async (req, res) => {
   try {
       const { userid } = req.params;
-
-      console.log(userid)
       const user = await User.findById(userid);
       console.log(user)
       if (!user) {

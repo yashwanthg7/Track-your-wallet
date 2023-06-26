@@ -10,6 +10,7 @@ const AuthProvider = ({ children }) => {
   const [userId, setUserId] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
   const [errors, setErrors] = useState({});
+  const[users,setUsers] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -18,10 +19,10 @@ const AuthProvider = ({ children }) => {
 
   const checkLoggedIn = async () => {
     try {
-      const token = localStorage.getItem('token'); // Get the token from localStorage
+      const token = localStorage.getItem('token'); 
       const response = await axios.get(`${API_URL}/verify`, {
         headers: {
-          Authorization: `Bearer ${token}`, // Send the token as a header
+          Authorization: `Bearer ${token}`, 
         },
       });
       const { user } = response.data;
@@ -33,14 +34,14 @@ const AuthProvider = ({ children }) => {
       setLoggedIn(false);
     }
   };
-  const memoizedUser = useMemo(() => userId, [userId]);
+  // const memoizedUserId = useMemo(() => userId, [userId]);
   
   const login = async (email, password) => {
     try {
       const response = await axios.post(`${API_URL}/login`, { email, password });
       const data = response.data;
       const token = data.token;
-      localStorage.setItem('token', token); // Store the token in localStorage
+      localStorage.setItem('token', token); 
       setUser(data.user);
       setUserId(user._id);
       setLoggedIn(true);
@@ -75,6 +76,18 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+  const getAllUser = async (userId) => {
+    try {
+      const response = await axios.get(`${API_URL}/getusers/${userId}`);
+      console.log(response.data);
+      setUsers(response.data);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  
+
   const authContextValue = {
     user,
     loggedIn,
@@ -82,7 +95,9 @@ const AuthProvider = ({ children }) => {
     login,
     signup,
     logout,
-    userId
+    userId,
+    users,
+    getAllUser
   };
 
   return <AuthContext.Provider value={authContextValue}>{children}</AuthContext.Provider>;

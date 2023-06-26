@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useTransactionsContext } from '../Context/TransactionsContext';
 import SpendingsModel from '../Components/SpendingsModel';
 import SpendingsForm from '../Components/SpendingsForm';
+import { useAuth } from '../Context/AuthContext';
 
 const SpendingsStyled = styled.div`
   display: flex;
@@ -53,8 +54,9 @@ const SpendingsStyled = styled.div`
 `;
 
 const Earnings = () => {
+  const { user } = useAuth();
   const { spendings, getSpendings, TotalSpendings } = useTransactionsContext();
-
+  getSpendings(user._id);
 
   return (
     <SpendingsStyled>
@@ -63,7 +65,7 @@ const Earnings = () => {
       </h2>
       <div className="income-content">
         <div className="form-container">
-          <SpendingsForm/>
+          <SpendingsForm />
         </div>
         <div className="spendings">
           {spendings.map((spending) => {

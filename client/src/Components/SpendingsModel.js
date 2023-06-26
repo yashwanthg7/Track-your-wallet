@@ -4,6 +4,7 @@ import { FaRupeeSign } from 'react-icons/fa';
 import { BsCalendarDate, BsFillChatRightTextFill } from 'react-icons/bs';
 import { RiDeleteBinLine } from 'react-icons/ri';
 import { useTransactionsContext } from '../Context/TransactionsContext';
+import { useAuth } from '../Context/AuthContext';
 
 const SpendingsModelStyled = styled.div`
   background: #1f2937;
@@ -47,22 +48,6 @@ const SpendingsModelStyled = styled.div`
     flex-direction: column;
     gap: 0.2rem;
 
-    h5 {
-      font-size: 1.3rem;
-      padding-left: 1rem;
-      position: relative;
-      &::before {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 0.8rem;
-        height: 0.8rem;
-        border-radius: 50%;
-        background: ${(props) => props.indicator};
-      }
-    }
 
     .inner-content {
       display: flex;
@@ -78,7 +63,6 @@ const SpendingsModelStyled = styled.div`
           display: flex;
           align-items: center;
           gap: 0.5rem;
-          color: var(--primary-color);
           opacity: 0.8;
         }
       }
@@ -87,12 +71,12 @@ const SpendingsModelStyled = styled.div`
 `;
 
 const EarningModel = ({ id, title, amount, date, category, description }) => {
+  const {user} = useAuth();
   const { deleteSpending } = useTransactionsContext();
   const handleDelete = (id) => {
-    deleteSpending(id);
+    deleteSpending(id , user._id);
   };
 
-  // Format the date to yyyy-mm-dd
   const formattedDate = new Date(date).toLocaleDateString('en-GB');
 
   return (

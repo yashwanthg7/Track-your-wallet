@@ -31,7 +31,6 @@ const Graph = () => {
     const { earnings, spendings ,transactionsHistory} = useTransactionsContext();
 
     const dateFormat = (date) => {
-        console.log(date);
         return moment(date).format('DD/MM/YYYY');
     };
     const [...history] = transactionsHistory();

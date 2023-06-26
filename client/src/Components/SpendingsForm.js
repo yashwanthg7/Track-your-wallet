@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useTransactionsContext } from '../Context/TransactionsContext';
+import { useAuth } from '../Context/AuthContext';
 
 const SpendingsFormStyled = styled.form`
   display: flex;
@@ -72,6 +73,7 @@ const SpendingsFormStyled = styled.form`
 `;
 
 const SpendingsForm = () => {
+  const {user} = useAuth();
   const { addSpending} = useTransactionsContext();
   const [input, setInput] = useState({
     title: '',
@@ -89,7 +91,7 @@ const SpendingsForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addSpending(input);
+    addSpending(input , user._id);
     setInput({ 
         title: '',
         amount: '',

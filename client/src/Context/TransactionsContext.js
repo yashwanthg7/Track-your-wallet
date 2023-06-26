@@ -1,42 +1,34 @@
-import React, { useContext, useEffect, useState } from "react"
+import React, { useContext, useState } from "react"
 import axios from 'axios';
-import { useAuth } from "./AuthContext";
 
 const API_URL = "https://track-your-wallet-mxq0.onrender.com/transactions"
 const TransactionsContext = React.createContext();
 
 export const TransactionsProvider = ({ children }) => {
 
-    const { userId } = useAuth();
     const [earnings, setEarnings] = useState([]);
     const [spendings, setSpendings] = useState([]);
     const [error, setError] = useState(null);
-    useEffect(() => {
-        console.log(userId)
-        if (userId) {
-            getEarnings();
-            getSpendings();
-        }
-    }, [userId]);
 
 
-    const addEarning = async (earning) => {
+    const addEarning = async (earning , userId) => {
         try {
             const response = await axios.post(`${API_URL}/add_Earnings/${userId}`, earning)
         } catch (error) {
             setError(error.response.data.message);
         }
-        getEarnings();
+        getEarnings(userId);
     }
-    const getEarnings = async () => {
+    const getEarnings = async (userId) => {
         try {
             const response = await axios.get(`${API_URL}/get_Earnings/${userId}`);
             setEarnings(response.data);
+            return response.data
         } catch (error) {
             setError(error.response.data.message);
         }
     }
-    const deleteEarning = async (id) => {
+    const deleteEarning = async (id, userId) => {
         try {
             console.log(id);
             const response = await axios.delete(`${API_URL}/delete_Earning/${id}/${userId}`);
@@ -45,7 +37,7 @@ export const TransactionsProvider = ({ children }) => {
         catch (error) {
             setError(error.response.data.message);
         }
-        getEarnings();
+        getEarnings(userId);
     }
 
     const TotalEarnings = () => {
@@ -56,30 +48,31 @@ export const TransactionsProvider = ({ children }) => {
         return totalEarnings;
     }
     //Spendings
-    const addSpending = async (spending) => {
+    const addSpending = async (spending, userId) => {
         try {
             const response = await axios.post(`${API_URL}/add_Spendings/${userId}`, spending)
         } catch (error) {
             setError(error.response.data.message);
         }
-        getSpendings();
+        getSpendings(userId);
     }
-    const getSpendings = async () => {
+    const getSpendings = async (userId) => {
         try {
             const response = await axios.get(`${API_URL}/get_Spendings/${userId}`);
             setSpendings(response.data);
+            return response.data;
         } catch (error) {
             setError(error.response.data.message);
         }
     }
-    const deleteSpending = async (id) => {
+    const deleteSpending = async (id, userId) => {
         try {
             const response = await axios.delete(`${API_URL}/delete_Spending/${id}/${userId}`);
         }
         catch (error) {
             setError(error.response.data.message);
         }
-        getSpendings();
+        getSpendings(userId);
     }
 
     const TotalSpendings = () => {
