@@ -17,7 +17,7 @@ const AuthProvider = ({ children }) => {
 
   const checkLoggedIn = async () => {
     try {
-      const response = await axios.get(`${API_URL}/verifyToken`);
+      const response = await axios.get(`${API_URL}/verify`);
       const { user } = response.data;
       setUser(user);
       setLoggedIn(true);
