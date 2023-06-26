@@ -2,7 +2,7 @@ import { createContext, useState, useEffect, useContext , useMemo} from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/auth";
+const API_URL = "https://track-your-wallet-mxq0.onrender.com/auth";
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
