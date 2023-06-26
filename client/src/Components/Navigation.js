@@ -29,13 +29,13 @@ const NavStyled = styled.nav`
       }
     }
   }
-  .bottom-nav {
+  /* .bottom-nav {
     margin-top: 250px;
     margin-left: 80px;
     margin-right: 0px;
     font-size: 20px;
     cursor: pointer;
-  }
+  } */
 `;
 
 const UserComponent = styled.div`
@@ -67,6 +67,11 @@ const Navigation = () => {
     navigate(link);
   };
 
+  if (!user) {
+    // Render a loading state or fallback UI if the user is not available yet
+    return <div>Loading...</div>
+  }
+  console.log(user.name)
   return (
     <NavStyled>
       <UserComponent>
@@ -83,9 +88,6 @@ const Navigation = () => {
           </li>
         ))}
       </ul>
-      <div className='bottom-nav'>
-        <FaSignOutAlt /> Sign Out
-      </div>
     </NavStyled>
   );
 };

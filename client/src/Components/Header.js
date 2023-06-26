@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { FaBars } from 'react-icons/fa';
+import { FaBars, FaSignOutAlt } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../Context/AuthContext';
 
 const Container = styled.div`
   max-width: 6xl;
@@ -60,12 +61,18 @@ const AuthButton = styled.button`
 
 const Header = ({ toggleNav }) => {
   const navigate = useNavigate();
+  const { loggedIn, logout } = useAuth();
 
   const handleRegister = () => {
     navigate('/signup');
   };
 
   const handleLogin = () => {
+    navigate('/login');
+  };
+
+  const handleLogout = () => {
+    logout();
     navigate('/login');
   };
 
@@ -76,8 +83,14 @@ const Header = ({ toggleNav }) => {
       </ToggleButton>
       <Heading>Track Your Wallet</Heading>
       <AuthButtonsContainer>
-        <AuthButton onClick={handleRegister}>Register</AuthButton>
-        <AuthButton onClick={handleLogin}>Login</AuthButton>
+        {loggedIn ? (
+          <AuthButton onClick={handleLogout}>Sign Out</AuthButton>
+        ) : (
+          <>
+            <AuthButton onClick={handleRegister}>Register</AuthButton>
+            <AuthButton onClick={handleLogin}>Login</AuthButton>
+          </>
+        )}
       </AuthButtonsContainer>
     </Container>
   );

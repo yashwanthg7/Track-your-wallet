@@ -8,6 +8,5 @@ router.post("/signup", signup);
 router.post("/logout", logout);
 router.get("/getusers/:userid", getUsers);
 router.get('/verify', verifyToken);
-  
 
 module.exports = router;

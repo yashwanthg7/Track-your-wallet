@@ -7,20 +7,18 @@ const TransactionsContext = React.createContext();
 
 export const TransactionsProvider = ({ children }) => {
 
-    const { user } = useAuth;
-    const [userId, setUserId] = useState(null);
+    const { userId } = useAuth();
     const [earnings, setEarnings] = useState([]);
     const [spendings, setSpendings] = useState([]);
     const [error, setError] = useState(null);
-
-
     useEffect(() => {
-        if (user && user.userId) {
-            setUserId(user.userId);
-        } else {
-            setUserId(null);
+        console.log(userId)
+        if (userId) {
+            getEarnings();
+            getSpendings();
         }
-    }, [user]);
+    }, [userId]);
+
 
     const addEarning = async (earning) => {
         try {

@@ -55,9 +55,6 @@ const EarningsStyled = styled.div`
 const Earnings = () => {
   const { earnings, getEarnings, TotalEarnings } = useTransactionsContext();
 
-  useEffect(() => {
-    getEarnings();
-  }, []);
 
   return (
     <EarningsStyled>

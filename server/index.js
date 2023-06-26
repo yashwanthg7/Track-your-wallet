@@ -13,14 +13,21 @@ const app = express();
 require("dotenv").config();
 const port = process.env.PORT;
 app.use(cors());
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000'); // Replace with the origin of your frontend app
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    next();
+});
 app.use(cookieParser());
 
 //middlewares
 app.use(express.json());
 
 //routes
-app.use("/transactions",transactions);
-app.use("/auth",userRouter)
+app.use("/transactions", transactions);
+app.use("/auth", userRouter)
 
 const startServer = async () => {
     try {
