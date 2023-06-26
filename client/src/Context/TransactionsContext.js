@@ -30,7 +30,6 @@ export const TransactionsProvider = ({ children }) => {
     }
     const deleteEarning = async (id, userId) => {
         try {
-            console.log(id);
             const response = await axios.delete(`${API_URL}/delete_Earning/${id}/${userId}`);
             console.log(response.data.message);
         }

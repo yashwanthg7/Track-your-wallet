@@ -4,6 +4,7 @@ import { FaRupeeSign } from 'react-icons/fa';
 import { BsCalendarDate, BsFillChatRightTextFill } from 'react-icons/bs';
 import { RiDeleteBinLine } from 'react-icons/ri';
 import { useTransactionsContext } from '../Context/TransactionsContext';
+import { useAuth } from '../Context/AuthContext';
 
 const EarningModelStyled = styled.div`
   background: #1f2937;
@@ -87,9 +88,11 @@ const EarningModelStyled = styled.div`
 `;
 
 const EarningModel = ({ id, title, amount, date, category, description }) => {
+
+  const {user} = useAuth();
   const { deleteEarning } = useTransactionsContext();
   const handleDelete = (id) => {
-    deleteEarning(id);
+    deleteEarning(id , user._id);
   };
 
   // Format the date to yyyy-mm-dd
