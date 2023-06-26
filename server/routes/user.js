@@ -1,5 +1,7 @@
-const { login, logout, signup, getUsers } = require("../controllers/user");
-const router = require('express').Router();
+const express = require("express");
+const router = express.Router();
+const { login, logout, signup, getUsers , verifyToken} = require("../controllers/user");
+
 
 router.post("/login", login);
 router.post("/signup", signup);

@@ -100,4 +100,26 @@ const verifyToken = async (req, res) => {
   }
 };
 
-module.exports = { login, signup, logout, verifyToken };
+const getUsers = async (req, res) => {
+  try {
+      const { userid } = req.params;
+
+      console.log(userid)
+      const user = await User.findById(userid);
+      console.log(user)
+      if (!user) {
+          return res.status(404).json({ message: 'User not found' });
+      }
+
+      if (user.role !== 'admin') {
+          return res.status(403).json({ message: 'Access denied' });
+      }
+
+      const users = await User.find().select('-password');
+      res.json(users);
+  } catch (error) {
+      return res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+module.exports = { login, signup, logout, verifyToken ,getUsers };
