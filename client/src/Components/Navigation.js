@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { FaUserCircle, FaSignOutAlt } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import { MenuItems } from '../utils/Menu';
+import { useAuth } from '../Context/AuthContext';
 
 const NavStyled = styled.nav`
   padding: 2rem 1.5rem;
@@ -29,7 +30,7 @@ const NavStyled = styled.nav`
     }
   }
   .bottom-nav {
-    margin-top: 300px;
+    margin-top: 250px;
     margin-left: 80px;
     margin-right: 0px;
     font-size: 20px;
@@ -54,14 +55,14 @@ const UserName = styled.h2`
   margin: 0;
 `;
 
-const UserMoney = styled.p`
-  font-size: 12px;
-  margin: 0;
-`;
+// const UserMoney = styled.p`
+//   font-size: 12px;
+//   margin: 0;
+// `;
 
 const Navigation = () => {
   const navigate = useNavigate();
-
+  const { user } = useAuth();
   const handleItemClick = (link) => {
     navigate(link);
   };
@@ -70,8 +71,7 @@ const Navigation = () => {
     <NavStyled>
       <UserComponent>
         <UserText>
-          <UserName>User</UserName>
-          <UserMoney>User Money</UserMoney>
+          <UserName>{user.name}</UserName>
         </UserText>
         <FaUserCircle style={{ fontSize: '40px' }} />
       </UserComponent>

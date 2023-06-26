@@ -8,7 +8,7 @@ import { useTransactionsContext } from '../Context/TransactionsContext';
 const EarningModelStyled = styled.div`
   background: #1f2937;
   border: 2px solid #ffffff;
-  box-shadow: 0px 1px 15px rgba(0, 0, 0, 0.06);
+  box-shadow: 0px 1px 15px rgba(0, 0, 0, 0.3);
   border-radius: 20px;
   padding: 1rem;
   margin-bottom: 1rem;

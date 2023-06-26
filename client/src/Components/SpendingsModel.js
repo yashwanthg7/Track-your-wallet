@@ -8,7 +8,7 @@ import { useTransactionsContext } from '../Context/TransactionsContext';
 const SpendingsModelStyled = styled.div`
   background: #1f2937;
   border: 2px solid #ffffff;
-  box-shadow: 0px 1px 15px rgba(0, 0, 0, 0.06);
+  box-shadow: 0px 1px 15px rgba(0, 0, 0, 0.3);
   border-radius: 20px;
   padding: 1rem;
   margin-bottom: 1rem;
@@ -30,7 +30,7 @@ const SpendingsModelStyled = styled.div`
     width: 35px;
     height: 35px;
     transition: background-color 0.3s;
-
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     &:hover {
       background-color: grey;
       color: #1f2937;

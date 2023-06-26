@@ -8,12 +8,13 @@ const SpendingsFormStyled = styled.form`
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  height: 450px;
+  height: 100%;
   max-width: 450px;
   background-color: #1f2937;
   color: #ffffff;
   padding: 1.5rem;
   border-radius: 5%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 
   input,
   textarea,

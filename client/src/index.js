@@ -3,13 +3,16 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import { TransactionsProvider } from './Context/TransactionsContext';
+import AuthProvider from './Context/AuthContext';
 
 ReactDOM.render(
   <BrowserRouter>
-    <TransactionsProvider>
+    <AuthProvider>
+      <TransactionsProvider>
         <App>
         </App>
-    </TransactionsProvider>
+      </TransactionsProvider>
+    </AuthProvider>
   </BrowserRouter>,
   document.getElementById('root')
 );

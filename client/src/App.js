@@ -7,8 +7,9 @@ import Transactions from './pages/Transactions';
 import Earnings from './pages/Earnings';
 import Spendings from './pages/Spendings';
 import Navigation from './Components/Navigation';
-import Graph from './Components/Graph';
-
+import Register from './pages/Register';
+import "./App.css"
+import Login  from './pages/LoginPage';
 const App = () => {
   const [isNavOpen, setIsNavOpen] = useState(true);
 
@@ -28,6 +29,8 @@ const App = () => {
                 <Route path="/transactions" element={<Transactions />} />
                 <Route path="/earnings" element={<Earnings />} />
                 <Route path="/spendings" element={<Spendings />} />
+                <Route path="/signup" element={<Register/>} />
+                <Route path='/login' element={<Login/>}></Route>
               </Routes>
             </MainContent>
           </Content>
