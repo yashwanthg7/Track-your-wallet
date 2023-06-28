@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react"
 import axios from 'axios';
 
-const API_URL = "https://track-your-wallet-mxq0.onrender.com/transactions"
+const API_URL = "http://localhost:5000/transactions"
 const TransactionsContext = React.createContext();
 
 export const TransactionsProvider = ({ children }) => {
@@ -11,17 +11,33 @@ export const TransactionsProvider = ({ children }) => {
     const [error, setError] = useState(null);
 
 
-    const addEarning = async (earning , userId) => {
+    const addEarning = async (earning, userId) => {
         try {
-            const response = await axios.post(`${API_URL}/add_Earnings/${userId}`, earning)
+            const token = localStorage.getItem('token');
+            const response = await axios.post(
+                `${API_URL}/add_Earnings/${userId}`,
+                earning,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
         } catch (error) {
             setError(error.response.data.message);
         }
         getEarnings(userId);
-    }
+    };
+
     const getEarnings = async (userId) => {
         try {
-            const response = await axios.get(`${API_URL}/get_Earnings/${userId}`);
+            const token = localStorage.getItem('token');
+            const response = await axios.get(`${API_URL}/get_Earnings/${userId}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
             setEarnings(response.data);
             return response.data
         } catch (error) {
@@ -30,7 +46,13 @@ export const TransactionsProvider = ({ children }) => {
     }
     const deleteEarning = async (id, userId) => {
         try {
-            const response = await axios.delete(`${API_URL}/delete_Earning/${id}/${userId}`);
+            const token = localStorage.getItem('token');
+            const response = await axios.delete(`${API_URL}/delete_Earning/${id}/${userId}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
             console.log(response.data.message);
         }
         catch (error) {
@@ -49,7 +71,13 @@ export const TransactionsProvider = ({ children }) => {
     //Spendings
     const addSpending = async (spending, userId) => {
         try {
-            const response = await axios.post(`${API_URL}/add_Spendings/${userId}`, spending)
+            const token = localStorage.getItem('token');
+            const response = await axios.post(`${API_URL}/add_Spendings/${userId}`, spending,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                })
         } catch (error) {
             setError(error.response.data.message);
         }
@@ -57,7 +85,13 @@ export const TransactionsProvider = ({ children }) => {
     }
     const getSpendings = async (userId) => {
         try {
-            const response = await axios.get(`${API_URL}/get_Spendings/${userId}`);
+            const token = localStorage.getItem('token');
+            const response = await axios.get(`${API_URL}/get_Spendings/${userId}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
             setSpendings(response.data);
             return response.data;
         } catch (error) {
@@ -66,7 +100,13 @@ export const TransactionsProvider = ({ children }) => {
     }
     const deleteSpending = async (id, userId) => {
         try {
-            const response = await axios.delete(`${API_URL}/delete_Spending/${id}/${userId}`);
+            const token = localStorage.getItem('token');
+            const response = await axios.delete(`${API_URL}/delete_Spending/${id}/${userId}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
         }
         catch (error) {
             setError(error.response.data.message);
