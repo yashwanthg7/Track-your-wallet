@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react"
 import axios from 'axios';
 
-const API_URL = "https://track-your-wallet.vercel.app/transactions"
+const API_URL = "https://track-your-wallet-mxq0.onrender.com/transactions"
 const TransactionsContext = React.createContext();
 
 export const TransactionsProvider = ({ children }) => {
