@@ -59,7 +59,7 @@ const AuthProvider = ({ children }) => {
       localStorage.setItem('token', token);
       setUserId(newUser._id);
       setLoggedIn(true);
-      window.location.href = "/login";
+      window.location.href = "/";
     } catch (error) {
       const {message} = error.response.data;
       setErrors({ signup: message });
@@ -71,7 +71,7 @@ const AuthProvider = ({ children }) => {
       await axios.post(`${API_URL}/logout`);
       setUser({});
       setLoggedIn(false);
-      window.location.href = "/login";
+      window.location.href = "/";
     } catch (error) {
       console.log(error);
     }
