@@ -1,5 +1,6 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import axios from "axios";
+import { useAuth } from "../Context/AuthContext";
 
 const API_URL = "https://track-your-wallet-mxq0.onrender.com/transactions";
 const TransactionsContext = React.createContext();
@@ -8,6 +9,7 @@ export const TransactionsProvider = ({ children }) => {
   const [earnings, setEarnings] = useState([]);
   const [spendings, setSpendings] = useState([]);
   const [error, setError] = useState(null);
+  const { user } = useAuth();
 
   const addEarning = async (earning, userId) => {
     console.log(earning);
@@ -37,14 +39,14 @@ export const TransactionsProvider = ({ children }) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      const earnings  = response.data;
-      console.log(response);
+      const earnings = response.data;
       setEarnings(earnings);
       return earnings;
     } catch (error) {
       setError(error);
     }
   };
+
   const deleteEarning = async (id, userId) => {
     try {
       const token = localStorage.getItem("token");
@@ -70,6 +72,7 @@ export const TransactionsProvider = ({ children }) => {
     });
     return totalEarnings;
   };
+
   //Spendings
   const addSpending = async (spending, userId) => {
     try {
@@ -89,6 +92,7 @@ export const TransactionsProvider = ({ children }) => {
     }
     getSpendings(userId);
   };
+
   const getSpendings = async (userId) => {
     try {
       const token = localStorage.getItem("token");
@@ -97,13 +101,21 @@ export const TransactionsProvider = ({ children }) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      const  spendings  = response.data;
+      const spendings = response.data;
       setSpendings(spendings);
       return spendings;
     } catch (error) {
       setError(error);
     }
   };
+
+
+
+  useEffect(() => {
+    getEarnings(user._id);
+    getSpendings(user._id);
+  }, [user._id]);
+
   const deleteSpending = async (id, userId) => {
     try {
       const token = localStorage.getItem("token");

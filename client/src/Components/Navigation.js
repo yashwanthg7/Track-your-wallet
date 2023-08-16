@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { FaUserCircle, FaSignOutAlt } from 'react-icons/fa';
-import { Link, useNavigate } from 'react-router-dom';
+import { FaUserCircle } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 import { MenuItems } from '../utils/Menu';
 import { useAuth } from '../Context/AuthContext';
 
@@ -64,7 +64,7 @@ const Navigation = () => {
   if (!user) {
     return <div>Loading...</div>
   }
-  console.log(user.name)
+  // console.log(user.name)
   return (
     <NavStyled>
       <UserComponent>

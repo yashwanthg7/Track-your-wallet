@@ -1,32 +1,31 @@
-import React, { useEffect } from 'react'
-import Graph from '../Components/Graph'
-import { useTransactionsContext } from '../Context/TransactionsContext'
-import styled from 'styled-components'
-
+import React, { useEffect } from "react";
+import Graph from "../Components/Graph";
+import { useTransactionsContext } from "../Context/TransactionsContext";
+import { useAuth } from "../Context/AuthContext";
+import styled from "styled-components";
 
 const Dashboard = () => {
-  const { getEarnings, getSpendings, totalBalance , spendings , earnings} = useTransactionsContext()
+  const { user } = useAuth();
+  const { getEarnings, getSpendings, totalBalance, spendings, earnings } =
+    useTransactionsContext();
   useEffect(() => {
-    getEarnings();
-    getSpendings();
-  }, [spendings, earnings]);
+    getEarnings(user._id);
+    getSpendings(user._id);
+  }, [user._id, spendings, earnings , getEarnings, getSpendings]);
   return (
     <div>
       <DashboardStyled>
         <div className="total-income">
           <h2>Total Balance : </h2>
-          <span>
-            ₹{totalBalance()}
-          </span>
+          <span>₹{totalBalance()}</span>
         </div>
-
       </DashboardStyled>
       <Graph />
     </div>
-  )
-}
+  );
+};
 const DashboardStyled = styled.div`
-display: flex;
+  display: flex;
   flex-direction: column;
   align-items: center;
   .total-income {
@@ -49,5 +48,5 @@ display: flex;
       color: var(--color-green);
     }
   }
-`
-export default Dashboard
+`;
+export default Dashboard;
