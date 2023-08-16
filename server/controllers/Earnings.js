@@ -4,6 +4,8 @@ const add_Earnings = async (req, res) => {
     const { title, amount, category, description, date } = req.body;
     const { userid } = req.params;
 
+    console.log("1",req.body)
+
     const parsedDate = new Date(date);
 
     const newEarnings = earningsSchema({
@@ -14,6 +16,7 @@ const add_Earnings = async (req, res) => {
         date: parsedDate,
         user: userid,
     });
+    console.log("2",newEarnings)
 
     try {
         if (!title || !category || !description || !date) {

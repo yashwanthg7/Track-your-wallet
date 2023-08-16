@@ -5,11 +5,11 @@ import styled from 'styled-components'
 
 
 const Dashboard = () => {
-  const { getEarnings, getSpendings, totalBalance } = useTransactionsContext()
+  const { getEarnings, getSpendings, totalBalance , spendings , earnings} = useTransactionsContext()
   useEffect(() => {
-    getEarnings()
-    getSpendings()
-  }, [])
+    getEarnings();
+    getSpendings();
+  }, [spendings, earnings]);
   return (
     <div>
       <DashboardStyled>

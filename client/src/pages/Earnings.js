@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
-import styled from 'styled-components';
-import { useTransactionsContext } from '../Context/TransactionsContext';
-import EarningsForm from '../Components/EarningsForm';
-import EarningModel from '../Components/EarningModel';
-import { useAuth } from '../Context/AuthContext';
+import React, { useEffect } from "react";
+import styled from "styled-components";
+import { useTransactionsContext } from "../Context/TransactionsContext";
+import EarningsForm from "../Components/EarningsForm";
+import EarningModel from "../Components/EarningModel";
+import { useAuth } from "../Context/AuthContext";
 
 const EarningsStyled = styled.div`
   display: flex;
@@ -56,7 +56,10 @@ const EarningsStyled = styled.div`
 const Earnings = () => {
   const { user } = useAuth();
   const { earnings, getEarnings, TotalEarnings } = useTransactionsContext();
-  getEarnings(user._id);
+
+  useEffect(() => {
+    getEarnings(user._id);
+  }, [earnings]);
 
   return (
     <EarningsStyled>

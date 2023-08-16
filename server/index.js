@@ -11,10 +11,13 @@ const userRouter = require('./routes/user');
 const app = express();
 
 require("dotenv").config();
-const port = process.env.PORT;
+const port = process.env.PORT
 app.use(cors());
 app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', 'https://track-your-wallet.onrender.com'); 
+    res.setHeader(
+      "Access-Control-Allow-Origin",
+      "https://track-your-wallet.onrender.com/"
+    ); 
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     res.setHeader('Access-Control-Allow-Credentials', 'true');
@@ -27,7 +30,7 @@ app.use(cookieParser());
 app.use(express.json());
 
 //routes
-app.use("/transactions",transactions);
+app.use("/transactions",transactions)
 app.use("/auth",userRouter)
 
 const startServer = async () => {

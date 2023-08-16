@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React ,{useEffect}from 'react';
 import styled from 'styled-components';
 import { useTransactionsContext } from '../Context/TransactionsContext';
 import SpendingsModel from '../Components/SpendingsModel';
@@ -55,8 +55,12 @@ const SpendingsStyled = styled.div`
 
 const Earnings = () => {
   const { user } = useAuth();
-  const { spendings, getSpendings, TotalSpendings } = useTransactionsContext();
-  getSpendings(user._id);
+  const { spendings, 
+    getSpendings, 
+    TotalSpendings } = useTransactionsContext();
+  useEffect(() => {
+    getSpendings(user._id);
+  }, [spendings]);
 
   return (
     <SpendingsStyled>

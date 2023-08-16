@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import styled from 'styled-components';
 import Header from './Components/Header';
 import Dashboard from './pages/dashboard';
@@ -9,7 +9,7 @@ import Spendings from './pages/Spendings';
 import Navigation from './Components/Navigation';
 import Register from './pages/Register';
 import "./App.css"
-import Login  from './pages/LoginPage';
+import Login from './pages/LoginPage';
 import { useAuth } from './Context/AuthContext';
 import RestrictedPage from './pages/RestrictedPage';
 
@@ -20,32 +20,33 @@ const App = () => {
   const toggleNav = () => {
     setIsNavOpen(!isNavOpen);
   };
+  console.log(loggedIn);
 
   return (
-    <div>
-      <Header toggleNav={toggleNav} showNav={!user || user.role !== 'admin'} />
-      <Layout>
-        {(!user || user.role !== 'admin') && isNavOpen && <Navigation />}
-        <Content>
-          <MainContent>
-            <Routes>
-              {user && user.role === 'admin' ? (
-                <Route path="/" element={<RestrictedPage />} />
-              ) : (
-                <>
-                  <Route path="/" element={<Dashboard />} />
-                  <Route path="/transactions" element={<Transactions />} />
-                  <Route path="/earnings" element={<Earnings />} />
-                  <Route path="/spendings" element={<Spendings />} />
-                  <Route path="/signup" element={<Register />} />
-                  <Route path="/login" element={<Login />} />
-                </>
-              )}
-            </Routes>
-          </MainContent>
-        </Content>
-      </Layout>
-    </div>
+        <div>
+          <Header toggleNav={toggleNav} showNav={!user || user.role !== 'admin'} />
+          <Layout>
+            {(!user || user.role !== 'admin') && isNavOpen && <Navigation />}
+            <Content>
+              <MainContent>
+                <Routes>
+                  {user && user.role === 'admin' ? (
+                    <Route path="/" element={<RestrictedPage />} />
+                  ) : (
+                    <>
+                      <Route path="/" element={<Dashboard />} />
+                      <Route path="/transactions" element={<Transactions />} />
+                      <Route path="/earnings" element={<Earnings />} />
+                      <Route path="/spendings" element={<Spendings />} />
+                      <Route path="/signup" element={<Register />} />
+                      <Route path="/login" element={<Login />} />
+                    </>
+                  )}
+                </Routes>
+              </MainContent>
+            </Content>
+          </Layout>
+        </div>
   );
 };
 

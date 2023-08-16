@@ -67,8 +67,9 @@ const signup = async (req, res) => {
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
-    return res.json({ message: 'Logged in successfully', newUser });
+    return res.json({ message: 'Logged in successfully', newUser ,token});
   } catch (error) {
+    console.log(error);
     return res.status(500).json({ message: 'Internal server error' });
   }
 };
@@ -103,22 +104,22 @@ const verifyToken = async (req, res) => {
 
 const getUsers = async (req, res) => {
   try {
-      const { userid } = req.params;
-      const user = await User.findById(userid);
-      console.log(user)
-      if (!user) {
-          return res.status(404).json({ message: 'User not found' });
-      }
+    const { userid } = req.params;
+    const user = await User.findById(userid);
+    console.log(user)
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
 
-      if (user.role !== 'admin') {
-          return res.status(403).json({ message: 'Access denied' });
-      }
+    if (user.role !== 'admin') {
+      return res.status(403).json({ message: 'Access denied' });
+    }
 
-      const users = await User.find().select('-password');
-      res.json(users);
+    const users = await User.find().select('-password');
+    res.json(users);
   } catch (error) {
-      return res.status(500).json({ message: 'Internal server error' });
+    return res.status(500).json({ message: 'Internal server error' });
   }
 };
 
-module.exports = { login, signup, logout, verifyToken ,getUsers };
+module.exports = { login, signup, logout, verifyToken, getUsers };
