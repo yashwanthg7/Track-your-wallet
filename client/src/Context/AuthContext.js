@@ -69,6 +69,7 @@ const AuthProvider = ({ children }) => {
   const logout = async () => {
     try {
       await axios.post(`${API_URL}/logout`);
+      localStorage.removeItem('token');
       setUser({});
       setLoggedIn(false);
       window.location.href = "/";
