@@ -42,8 +42,7 @@ const Login = () => {
       </FormGroup>
       <LoginStyledButton type="submit">Login</LoginStyledButton>
       <LoginLink>
-        Don't have an account?{" "}
-        <Link to="/signup">Sign Up</Link>
+        Don't have an account? <Link to="/signup">Sign Up</Link>
       </LoginLink>
     </LoginStyledForm>
   );

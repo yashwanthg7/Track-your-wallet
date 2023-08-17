@@ -2,46 +2,69 @@ const User = require('../models/user');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
+const validationRules = {
+  email: {
+    required: true,
+    email: true,
+  },
+  password: {
+    required: true,
+    minLength: 8,
+  },
+};
+
 const login = async (req, res) => {
   const { email, password } = req.body;
+
+  const errors = validateFormData(req.body);
+
+  if (errors) {
+    return res.status(400).json({ errors });
+  }
 
   try {
     const user = await User.findOne({ email });
 
     if (!user) {
-      return res.status(401).json({ message: 'Incorrect email or password' });
+      return res.status(401).json({ message: "Incorrect email or password" });
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid) {
-      return res.status(401).json({ message: 'Incorrect email or password' });
+      return res.status(401).json({ message: "Incorrect email or password" });
     }
 
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
-      expiresIn: '7d',
+      expiresIn: "7d",
     });
 
-    res.cookie('token', token, {
+    res.cookie("token", token, {
       httpOnly: true,
-      sameSite: 'strict',
+      sameSite: "strict",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
-    return res.json({ message: 'Logged in successfully', token, user });
+    return res.json({ message: "Logged in successfully", token, user });
   } catch (error) {
-    return res.status(500).json({ message: 'Internal server error' });
+    return res.status(500).json({ message: "Internal server error" });
   }
 };
 
 const signup = async (req, res) => {
   const { name, email, password } = req.body;
 
+  const errors = validateFormData(req.body);
+
+  if (errors) {
+    return res.status(400).json({ errors });
+  }
+
   try {
     const existingUser = await User.findOne({ email });
 
     if (existingUser) {
-      return res.status(409).json({ message: 'User already exists' });
+      return res.status(409).json({ message: "User already exists" });
     }
 
     const isAdmin = /@hashinsert\.com$/.test(email);
@@ -52,25 +75,25 @@ const signup = async (req, res) => {
       name,
       email,
       password: hashedPassword,
-      role: isAdmin ? 'admin' : 'user',
+      role: isAdmin ? "admin" : "user",
     });
 
     let newUser = await user.save();
 
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
-      expiresIn: '7d',
+      expiresIn: "7d",
     });
 
-    res.cookie('token', token, {
+    res.cookie("token", token, {
       httpOnly: true,
-      sameSite: 'strict',
+      sameSite: "strict",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
-    return res.json({ message: 'Logged in successfully', newUser ,token});
+    return res.json({ message: "Logged in successfully", newUser, token });
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ message: 'Internal server error' });
+    return res.status(500).json({ message: "Internal server error" });
   }
 };
 

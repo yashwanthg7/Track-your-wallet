@@ -8,7 +8,7 @@ import { useAuth } from '../Context/AuthContext';
 const NavStyled = styled.nav`
   padding: 2rem 1.5rem;
   width: 300px;
-  height: 100%;
+  height: 100vh;
   background-color: #1f2937;
   color: #ffffff;
   .menu-items {

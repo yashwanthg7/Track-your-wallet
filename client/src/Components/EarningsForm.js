@@ -9,7 +9,7 @@ const FormStyled = styled.form`
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  height: 100%;
+  /* height: 100%; */
   max-width: 500px;
   background-color: #1f2937;
   color: #ffffff;

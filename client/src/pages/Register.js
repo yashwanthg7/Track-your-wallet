@@ -22,7 +22,9 @@ const Signup = () => {
   return (
     <RegisterStyledForm onSubmit={handleSignup}>
       <h1>Sign Up</h1>
-      {errors.signup && <RegisterErrorMessage>{errors.signup}</RegisterErrorMessage>}
+      {errors.signup && (
+        <RegisterErrorMessage>{errors.signup}</RegisterErrorMessage>
+      )}
       <FormGroup>
         <Label>Name</Label>
         <RegisterStyledInput
@@ -52,8 +54,7 @@ const Signup = () => {
       </FormGroup>
       <RegisterStyledButton type="submit">Sign Up</RegisterStyledButton>
       <RegisterLink>
-        Already existing user?{" "}
-        <Link to="/login">Login</Link>
+        Already existing user? <Link to="/login">Login</Link>
       </RegisterLink>
     </RegisterStyledForm>
   );

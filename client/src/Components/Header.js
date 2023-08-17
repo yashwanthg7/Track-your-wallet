@@ -1,13 +1,13 @@
-import React from 'react';
-import styled from 'styled-components';
-import { FaBars, FaSignOutAlt } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../Context/AuthContext';
+import React from "react";
+import styled from "styled-components";
+import { FaBars, FaSignOutAlt } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../Context/AuthContext";
+import Logo from "../Logo.jpg";
 
 const Container = styled.div`
   max-width: 6xl;
   margin: 0 auto;
-  
   color: #333333;
   position: relative;
   display: flex;
@@ -59,31 +59,41 @@ const AuthButton = styled.button`
   margin-left: 16px;
 `;
 
-const Header = ({ toggleNav ,showNav}) => {
+const Header = ({ toggleNav, showNav }) => {
   const navigate = useNavigate();
   const { loggedIn, logout } = useAuth();
 
   const handleRegister = () => {
-    navigate('/signup');
+    navigate("/signup");
   };
 
   const handleLogin = () => {
-    navigate('/login');
+    navigate("/login");
   };
 
   const handleLogout = () => {
     logout();
-    navigate('/login');
+    navigate("/login");
   };
 
   return (
     <Container>
-    {showNav && (
-      <ToggleButton onClick={toggleNav}>
-        <FaBars />
-      </ToggleButton>
-    )}
-      <Heading>Track Your Wallet</Heading>
+      {showNav && (
+        <ToggleButton onClick={toggleNav}>
+          <FaBars />
+        </ToggleButton>
+      )}
+      <Heading>
+        <img
+          src={Logo}
+          onClick={() => (window.location.href = "/")}
+          style={{
+            cursor: "pointer",
+            width: "300px",
+            height: "50px",
+          }}
+        />
+      </Heading>
       <AuthButtonsContainer>
         {loggedIn ? (
           <AuthButton onClick={handleLogout}>Sign Out</AuthButton>

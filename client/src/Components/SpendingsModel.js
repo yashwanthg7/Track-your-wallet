@@ -21,6 +21,7 @@ const SpendingsModelStyled = styled.div`
   color: #fff;
 
   .delete-button {
+    overflow-y: hidden;
     cursor: pointer;
     display: flex;
     justify-content: center;
@@ -70,7 +71,7 @@ const SpendingsModelStyled = styled.div`
   }
 `;
 
-const EarningModel = ({ id, title, amount, date, category, description }) => {
+const SpendingsModel = ({ id, title, amount, date, category, description }) => {
   const {user} = useAuth();
   const { deleteSpending } = useTransactionsContext();
   const handleDelete = (id) => {
@@ -108,4 +109,4 @@ const EarningModel = ({ id, title, amount, date, category, description }) => {
   );
 };
 
-export default EarningModel;
+export default SpendingsModel;

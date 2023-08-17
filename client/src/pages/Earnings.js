@@ -27,7 +27,6 @@ const EarningsStyled = styled.div`
     span {
       font-size: 1.5rem;
       font-weight: 800;
-      color: var(--color-green);
     }
   }
 
@@ -59,7 +58,7 @@ const Earnings = () => {
 
   useEffect(() => {
     getEarnings(user._id);
-  }, [earnings]);
+  }, [user._id]);
 
   return (
     <EarningsStyled>

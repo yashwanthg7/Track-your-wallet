@@ -8,19 +8,23 @@ const Dashboard = () => {
   const { user } = useAuth();
   const { getEarnings, getSpendings, totalBalance, spendings, earnings } =
     useTransactionsContext();
+  const {isLoggedIn} = useAuth();
   useEffect(() => {
     getEarnings(user._id);
     getSpendings(user._id);
-  }, [user._id, spendings, earnings , getEarnings, getSpendings]);
+  }, [user._id]);
   return (
     <div>
-      <DashboardStyled>
-        <div className="total-income">
-          <h2>Total Balance : </h2>
-          <span>₹{totalBalance()}</span>
-        </div>
-      </DashboardStyled>
-      <Graph />
+      
+      <div>
+        <DashboardStyled>
+          <div className="total-income">
+            <h2>Total Balance : </h2>
+            <span>₹{totalBalance()}</span>
+          </div>
+        </DashboardStyled>
+        <Graph />
+      </div>
     </div>
   );
 };

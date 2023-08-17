@@ -21,6 +21,7 @@ const EarningModelStyled = styled.div`
   color: #fff;
 
   .delete-button {
+    overflow-y:hidden;
     cursor: pointer;
     display: flex;
     justify-content: center;

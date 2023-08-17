@@ -1,9 +1,9 @@
-import React ,{useEffect}from 'react';
-import styled from 'styled-components';
-import { useTransactionsContext } from '../Context/TransactionsContext';
-import SpendingsModel from '../Components/SpendingsModel';
-import SpendingsForm from '../Components/SpendingsForm';
-import { useAuth } from '../Context/AuthContext';
+import React, { useEffect } from "react";
+import styled from "styled-components";
+import { useTransactionsContext } from "../Context/TransactionsContext";
+import SpendingsModel from "../Components/SpendingsModel";
+import SpendingsForm from "../Components/SpendingsForm";
+import { useAuth } from "../Context/AuthContext";
 
 const SpendingsStyled = styled.div`
   display: flex;
@@ -27,7 +27,6 @@ const SpendingsStyled = styled.div`
     span {
       font-size: 1.5rem;
       font-weight: 800;
-      color: var(--color-green);
     }
   }
 
@@ -53,14 +52,12 @@ const SpendingsStyled = styled.div`
   }
 `;
 
-const Earnings = () => {
+const Spendings = () => {
   const { user } = useAuth();
-  const { spendings, 
-    getSpendings, 
-    TotalSpendings } = useTransactionsContext();
+  const { spendings, getSpendings, TotalSpendings } = useTransactionsContext();
   useEffect(() => {
     getSpendings(user._id);
-  }, [spendings]);
+  }, [user._id]);
 
   return (
     <SpendingsStyled>
@@ -73,7 +70,8 @@ const Earnings = () => {
         </div>
         <div className="spendings">
           {spendings.map((spending) => {
-            const { _id, title, amount, date, category, description } = spending;
+            const { _id, title, amount, date, category, description } =
+              spending;
             return (
               <SpendingsModel
                 key={_id}
@@ -92,4 +90,4 @@ const Earnings = () => {
   );
 };
 
-export default Earnings;
+export default Spendings;

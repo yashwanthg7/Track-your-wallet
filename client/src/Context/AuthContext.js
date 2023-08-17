@@ -9,59 +9,64 @@ const AuthProvider = ({ children }) => {
   const [userId, setUserId] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
   const [errors, setErrors] = useState({});
-  const [users, setUsers] = useState([]); 
+  const [users, setUsers] = useState([]);
 
-  useEffect(() => {
-    const checkLoggedIn = async () => {
-      try {
-        const token = localStorage.getItem('token');
-        const response = await axios.get(`${API_URL}/verify`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        const { user } = response.data;
-        console.log(user);
-        setUser(user);
-        setUserId(user._id);
-        setLoggedIn(true);
-        if (user.role === "admin") {
-          window.location.href = "/";
-        }
-      } catch (error) {
-        setLoggedIn(false);
+  const checkLoggedIn = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.get(`${API_URL}/verify`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const { user } = response.data;
+      console.log(user);
+      setUser(user);
+      setUserId(user._id);
+      setLoggedIn(true);
+      if (user.role === "admin") {
+        window.location.href = "/";
       }
-    };
-    checkLoggedIn();
-  }, []);
+    } catch (error) {
+      setLoggedIn(false);
+    }
+  };
 
   const login = async (email, password) => {
     try {
-      const response = await axios.post(`${API_URL}/login`, { email, password });
+      const response = await axios.post(`${API_URL}/login`, {
+        email,
+        password,
+      });
       const { user, token, message } = response.data;
-      localStorage.setItem('token', token);
+      localStorage.setItem("token", token);
       console.log(message);
       setUser(user);
       setUserId(user._id);
       setLoggedIn(true);
       window.location.href = "/";
     } catch (error) {
+      console.log(error.response.message)
       setErrors({ login: error.response.message });
     }
   };
 
   const signup = async (name, email, password) => {
     try {
-      const response = await axios.post(`${API_URL}/signup`, { name, email, password });
+      const response = await axios.post(`${API_URL}/signup`, {
+        name,
+        email,
+        password,
+      });
       const { newUser, token } = response.data;
-      console.log(response.data)
+      console.log(response.data);
       setUser(newUser);
-      localStorage.setItem('token', token);
+      localStorage.setItem("token", token);
       setUserId(newUser._id);
       setLoggedIn(true);
       window.location.href = "/";
     } catch (error) {
-      const {message} = error.response.data;
+      const { message } = error.response.data;
       setErrors({ signup: message });
     }
   };
@@ -69,6 +74,7 @@ const AuthProvider = ({ children }) => {
   const logout = async () => {
     try {
       await axios.post(`${API_URL}/logout`);
+      localStorage.removeItem("token");
       setUser({});
       setLoggedIn(false);
       window.location.href = "/";
@@ -97,10 +103,15 @@ const AuthProvider = ({ children }) => {
     logout,
     userId,
     users,
-    getAllUser
+    getAllUser,
+    checkLoggedIn,
   };
 
-  return <AuthContext.Provider value={authContextValue}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={authContextValue}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
 export const useAuth = () => useContext(AuthContext);
