@@ -79,7 +79,7 @@ const Header = ({ toggleNav, showNav }) => {
   return (
     <Container>
       {showNav && (
-        <ToggleButton onClick={toggleNav}>
+        <ToggleButton onClick={toggleNav} >
           <FaBars />
         </ToggleButton>
       )}

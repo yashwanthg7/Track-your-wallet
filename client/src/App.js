@@ -19,7 +19,9 @@ const App = () => {
   const { checkLoggedIn, loggedIn, user } = useAuth();
 
   const toggleNav = () => {
-    setIsNavOpen(!isNavOpen);
+    if (loggedIn) {
+      setIsNavOpen(!isNavOpen);
+    }
   };
   // console.log(loggedIn);
   useEffect(() => {
@@ -50,7 +52,7 @@ const App = () => {
           </Content>
         </Layout>
       ) : (
-        <div style={{marginTop:"50px"}}>
+        <div style={{ marginTop: "50px" }}>
           <Routes>
             <Route path="/" element={<NotLoggedInPage />} />
             <Route path="/login" element={<Login />} />

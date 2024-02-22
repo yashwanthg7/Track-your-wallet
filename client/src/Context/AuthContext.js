@@ -46,8 +46,8 @@ const AuthProvider = ({ children }) => {
       setLoggedIn(true);
       window.location.href = "/";
     } catch (error) {
-      console.log(error.response.message)
-      setErrors({ login: error.response.message });
+      console.log("Error response from server:", error.response.data);
+      setErrors({ login: error.response.data.message });
     }
   };
 
@@ -58,6 +58,7 @@ const AuthProvider = ({ children }) => {
         email,
         password,
       });
+      console.log(name, email, password);
       const { newUser, token } = response.data;
       console.log(response.data);
       setUser(newUser);
@@ -66,15 +67,15 @@ const AuthProvider = ({ children }) => {
       setLoggedIn(true);
       window.location.href = "/";
     } catch (error) {
-      const { message } = error.response.data;
-      setErrors({ signup: message });
+      console.log("Error response from server:", error.response.data);
+      setErrors({ signup: error.response.data.message });
     }
   };
 
   const logout = async () => {
     try {
       await axios.post(`${API_URL}/logout`);
-      localStorage.removeItem('token');
+      localStorage.removeItem("token");
       setUser({});
       setLoggedIn(false);
       window.location.href = "/";

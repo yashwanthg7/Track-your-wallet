@@ -1,6 +1,8 @@
-const User = require('../models/user');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+const User = require("../models/user");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const catchAsyncError = require("../middlewares/catchAsyncError.js");
+const ErrorHandler = require("../middlewares/error.js");
 
 const validationRules = {
   email: {
@@ -13,26 +15,26 @@ const validationRules = {
   },
 };
 
-const login = async (req, res) => {
+const login = catchAsyncError(async (req, res, next) => {
   const { email, password } = req.body;
 
-  const errors = validateFormData(req.body);
+  // const errors = validateFormData(req.body);
 
-  if (errors) {
-    return res.status(400).json({ errors });
-  }
+  // if (errors) {
+  //   return res.status(400).json({ errors });
+  // }
 
   try {
     const user = await User.findOne({ email });
 
     if (!user) {
-      return res.status(401).json({ message: "Incorrect email or password" });
+      res.status(401).json({ message: "Invalid email or password" });
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid) {
-      return res.status(401).json({ message: "Incorrect email or password" });
+      res.status(401).json({ message: "Invalid email or password" });
     }
 
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
@@ -49,22 +51,22 @@ const login = async (req, res) => {
   } catch (error) {
     return res.status(500).json({ message: "Internal server error" });
   }
-};
+});
 
-const signup = async (req, res) => {
+const signup = catchAsyncError(async (req, res, next) => {
   const { name, email, password } = req.body;
 
-  const errors = validateFormData(req.body);
+  // const errors = validateFormData(req.body);
 
-  if (errors) {
-    return res.status(400).json({ errors });
-  }
+  // if (errors) {
+  //   return res.status(400).json({ errors });
+  // }
 
   try {
     const existingUser = await User.findOne({ email });
 
     if (existingUser) {
-      return res.status(409).json({ message: "User already exists" });
+      res.status(401).json({ message: "Email already exists!" });
     }
 
     const isAdmin = /@hashinsert\.com$/.test(email);
@@ -90,24 +92,24 @@ const signup = async (req, res) => {
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
-    return res.json({ message: "Logged in successfully", newUser, token });
+    return res.json({ message: "User Created successfully", newUser, token });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Internal server error" });
   }
-};
+});
 
-const logout = async (req, res) => {
-  res.clearCookie('token');
-  res.json({ message: 'Logged out successfully' });
-};
+const logout = catchAsyncError(async (req, res, next) => {
+  res.clearCookie("token");
+  res.json({ message: "Logged out successfully" });
+});
 
 const verifyToken = async (req, res) => {
   const authHeader = req.headers.authorization;
-  const token = authHeader && authHeader.split(' ')[1]
+  const token = authHeader && authHeader.split(" ")[1];
 
   if (!token) {
-    return res.status(401).json({ message: 'Unauthorized' });
+    return res.status(401).json({ message: "Unauthorized" });
   }
 
   try {
@@ -116,12 +118,12 @@ const verifyToken = async (req, res) => {
     const user = await User.findById(userId);
 
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: "User not found" });
     }
 
     return res.json({ user });
   } catch (error) {
-    return res.status(401).json({ message: 'Invalid token' });
+    return res.status(401).json({ message: "Invalid token" });
   }
 };
 
@@ -129,19 +131,19 @@ const getUsers = async (req, res) => {
   try {
     const { userid } = req.params;
     const user = await User.findById(userid);
-    console.log(user)
+    console.log(user);
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: "User not found" });
     }
 
-    if (user.role !== 'admin') {
-      return res.status(403).json({ message: 'Access denied' });
+    if (user.role !== "admin") {
+      return res.status(403).json({ message: "Access denied" });
     }
 
-    const users = await User.find().select('-password');
+    const users = await User.find().select("-password");
     res.json(users);
   } catch (error) {
-    return res.status(500).json({ message: 'Internal server error' });
+    return res.status(500).json({ message: "Internal server error" });
   }
 };
 

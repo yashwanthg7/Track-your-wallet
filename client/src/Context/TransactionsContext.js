@@ -77,6 +77,7 @@ export const TransactionsProvider = ({ children }) => {
   const addSpending = async (spending, userId) => {
     try {
       const token = localStorage.getItem("token");
+      console.log(spending)
       const response = await axios.post(
         `${API_URL}/add_Spendings/${userId}`,
         spending,

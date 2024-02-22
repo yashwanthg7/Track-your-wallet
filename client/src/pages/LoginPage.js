@@ -18,6 +18,11 @@ const Login = () => {
     navigate("/signup");
   };
 
+  const LoginErrorMessage = ({ children }) => (
+    <div style={{ color: "red" }}>{children}</div>
+  );
+
+
   return (
     <LoginStyledForm onSubmit={handleLogin}>
       <h1>Login</h1>
