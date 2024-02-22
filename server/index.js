@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const cookieParser = require("cookie-parser")
-
+const path = require("path");
 
 const transactions = require('./routes/transactions')
 const userRouter = require('./routes/user');
@@ -29,9 +29,15 @@ app.use(cookieParser());
 //middlewares
 app.use(express.json());
 
+app.use(express.static(path.join(__dirname, "client/build")));
+
 //routes
 app.use("/transactions",transactions)
 app.use("/auth",userRouter)
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client/build", "index.html"));
+});
 
 const startServer = async () => {
     try {
