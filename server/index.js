@@ -29,14 +29,14 @@ app.use(cookieParser());
 //middlewares
 app.use(express.json());
 
-app.use(express.static(path.join(__dirname, "client/build")));
+app.use(express.static(path.join(__dirname, "../client/build")));
 
 //routes
 app.use("/transactions",transactions)
 app.use("/auth",userRouter)
 
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "client/build", "index.html"));
+  res.sendFile(path.join(__dirname, "../client/build", "index.html"));
 });
 
 const startServer = async () => {
