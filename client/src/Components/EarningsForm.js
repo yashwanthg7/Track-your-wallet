@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import { useTransactionsContext } from '../Context/TransactionsContext';
-import { useAuth } from '../Context/AuthContext';
+import React, { useState } from "react";
+import styled from "styled-components";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { useTransactionsContext } from "../Context/TransactionsContext";
+import { useAuth } from "../Context/AuthContext";
 
 const FormStyled = styled.form`
   display: flex;
@@ -73,15 +73,14 @@ const FormStyled = styled.form`
 `;
 
 const EarningsForm = () => {
-
-  const {user} = useAuth();
-  const { addEarning} = useTransactionsContext();
+  const { user } = useAuth();
+  const { addEarning } = useTransactionsContext();
   const [input, setInput] = useState({
-    title: '',
-    amount: '',
-    date: '',
-    category: '',
-    description: '',
+    title: "",
+    amount: "",
+    date: "",
+    category: "",
+    description: "",
   });
 
   const { title, amount, date, category, description } = input;
@@ -92,14 +91,14 @@ const EarningsForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addEarning(input , user._id);
-    setInput({ 
-        title: '',
-        amount: '',
-        date: '',
-        category: '',
-        description: '',
-      });
+    addEarning(input, user._id);
+    setInput({
+      title: "",
+      amount: "",
+      date: "",
+      category: "",
+      description: "",
+    });
   };
 
   return (
@@ -110,7 +109,7 @@ const EarningsForm = () => {
           value={title}
           name="title"
           placeholder="Income Title"
-          onChange={handleInput('title')}
+          onChange={handleInput("title")}
         />
       </div>
       <div className="input-control">
@@ -119,7 +118,7 @@ const EarningsForm = () => {
           value={amount}
           name="amount"
           placeholder="Income amount"
-          onChange={handleInput('amount')}
+          onChange={handleInput("amount")}
         />
       </div>
       <div className="input-control">
@@ -139,7 +138,7 @@ const EarningsForm = () => {
           value={category}
           name="category"
           id="category"
-          onChange={handleInput('category')}
+          onChange={handleInput("category")}
         >
           <option value="" disabled>
             Select Option
@@ -159,7 +158,7 @@ const EarningsForm = () => {
           id="description"
           cols="30"
           rows="4"
-          onChange={handleInput('description')}
+          onChange={handleInput("description")}
         ></textarea>
       </div>
       <div className="submit-btn">

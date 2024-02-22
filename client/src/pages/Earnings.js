@@ -43,12 +43,12 @@ const EarningsStyled = styled.div`
       flex: 1;
     }
 
-    .earnings {
+    /* .earnings {
       flex: 1;
       display: flex;
       flex-wrap: wrap;
       gap: 1rem;
-    }
+    } */
   }
 `;
 
